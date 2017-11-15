@@ -155,14 +155,14 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
                             .setTitle('Math & prime numbers')
                             .setDescription('42 is an abundant number because the sum of its ' +
                                 'proper divisors 54 is greater…')
-                            .setImage('http://example.com/math_and_prime.jpg', 'Math & prime numbers'))
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', 'Math & prime numbers'))
                         // Add the second item to the list
                         .addItems(app.buildOptionItem('EGYPT',
                             ['religion', 'egpyt', 'ancient egyptian'])
                             .setTitle('Ancient Egyptian religion')
                             .setDescription('42 gods who ruled on the fate of the dead in the ' +
                                 'afterworld. Throughout the under…')
-                            .setImage('http://example.com/egypt', 'Egypt')
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg', 'Egypt')
                         )
                         // Add third item to the list
                         .addItems(app.buildOptionItem('RECIPES',
@@ -170,7 +170,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
                             .setTitle('42 recipes with 42 ingredients')
                             .setDescription('Here\'s a beautifully simple recipe that\'s full ' +
                                 'of flavor! All you need is some ginger and…')
-                            .setImage('http://example.com/recipe', 'Recipe')
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/08/448/2208448_500.jpg', 'Recipe')
                         )
                 );
             } else if (parameters.cardType == '4') {
@@ -183,14 +183,14 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
                             .setTitle('Math & prime numbers')
                             .setDescription('42 is an abundant number because the sum of its ' +
                                 'proper divisors 54 is greater…')
-                            .setImage('http://example.com/math_and_prime.jpg', 'Math & prime numbers'))
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', 'Math & prime numbers'))
                         // Add the second item to the carousel
                         .addItems(app.buildOptionItem('EGYPT',
                             ['religion', 'egpyt', 'ancient egyptian'])
                             .setTitle('Ancient Egyptian religion')
                             .setDescription('42 gods who ruled on the fate of the dead in the ' +
                                 'afterworld. Throughout the under…')
-                            .setImage('http://example.com/egypt', 'Egypt')
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg', 'Egypt')
                         )
                         // Add third item to the carousel
                         .addItems(app.buildOptionItem('RECIPES',
@@ -198,7 +198,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
                             .setTitle('42 recipes with 42 ingredients')
                             .setDescription('Here\'s a beautifully simple recipe that\'s full ' +
                                 'of flavor! All you need is some ginger and…')
-                            .setImage('http://example.com/recipe', 'Recipe')
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/08/448/2208448_500.jpg', 'Recipe')
                         )
                 );
             } else if (parameters.cardType == '5') {
