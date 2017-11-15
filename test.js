@@ -96,6 +96,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
       //app.ask(googleResponse); // Send response to Dialogflow and Google Assistant
 
+        console.log("param = " + parameters.cardType);
+
       console.log('response body: ' + JSON.stringify(app.buildRichResponse()
         // Create a basic card and add it to the rich response
         .addSimpleResponse('이런 노래 어떨까요?')
@@ -105,15 +107,113 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
           .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', '이미지가 제대로 뜨지 않습니다.')
         )));
 
-          app.ask(app.buildRichResponse()
-            // Create a basic card and add it to the rich response
-            .addSimpleResponse('이런 노래 어떨까요?')
-            .addBasicCard(app.buildBasicCard('카드의 내용이 나오는 자리.')
-              .setTitle('제목위치')
-              .addButton('Read more', 'www.melon.com')
-              .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', '이미지가 제대로 뜨지 않습니다.')
-            )
-          );
+            if (parameters.cardType == '1') {
+                app.ask(app.buildRichResponse()
+                    // Create a basic card and add it to the rich response
+                        .addSimpleResponse('이런 노래 어떨까요?' + parameters.cardType)
+                        .addBasicCard(app.buildBasicCard('카드의 내용이 나오는 자리.')
+                            .setTitle('제목위치')
+                            .addButton('Read more', 'www.melon.com')
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', '이미지가 제대로 뜨지 않습니다.')
+                        )
+                );
+            } else if (parameters.cardType == '2') {
+                app.askWithList('Alright! Here are a few things you can learn. Which sounds interesting?',
+                    // Build a list
+                    app.buildList('Things to learn about')
+                    // Add the first item to the list
+                        .addItems(app.buildOptionItem('MATH_AND_PRIME',
+                            ['math', 'math and prime', 'prime numbers', 'prime'])
+                            .setTitle('Math & prime numbers')
+                            .setDescription('42 is an abundant number because the sum of its ' +
+                                'proper divisors 54 is greater…')
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', 'Math & prime numbers'))
+                        // Add the second item to the list
+                        .addItems(app.buildOptionItem('EGYPT',
+                            ['religion', 'egpyt', 'ancient egyptian'])
+                            .setTitle('Ancient Egyptian religion')
+                            .setDescription('42 gods who ruled on the fate of the dead in the ' +
+                                'afterworld. Throughout the under…')
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg', 'Egypt')
+                        )
+                        // Add third item to the list
+                        .addItems(app.buildOptionItem('RECIPES',
+                            ['recipes', 'recipe', '42 recipes'])
+                            .setTitle('42 recipes with 42 ingredients')
+                            .setDescription('Here\'s a beautifully simple recipe that\'s full ' +
+                                'of flavor! All you need is some ginger and…')
+                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/08/448/2208448_500.jpg', 'Recipe')
+                        )
+                );
+            } else if (parameters.cardType == '3') {
+                app.askWithList('Alright! Here are a few things you can learn. Which sounds interesting?',
+                    // Build a list
+                    app.buildList('Things to learn about')
+                    // Add the first item to the list
+                        .addItems(app.buildOptionItem('MATH_AND_PRIME',
+                            ['math', 'math and prime', 'prime numbers', 'prime'])
+                            .setTitle('Math & prime numbers')
+                            .setDescription('42 is an abundant number because the sum of its ' +
+                                'proper divisors 54 is greater…')
+                            .setImage('http://example.com/math_and_prime.jpg', 'Math & prime numbers'))
+                        // Add the second item to the list
+                        .addItems(app.buildOptionItem('EGYPT',
+                            ['religion', 'egpyt', 'ancient egyptian'])
+                            .setTitle('Ancient Egyptian religion')
+                            .setDescription('42 gods who ruled on the fate of the dead in the ' +
+                                'afterworld. Throughout the under…')
+                            .setImage('http://example.com/egypt', 'Egypt')
+                        )
+                        // Add third item to the list
+                        .addItems(app.buildOptionItem('RECIPES',
+                            ['recipes', 'recipe', '42 recipes'])
+                            .setTitle('42 recipes with 42 ingredients')
+                            .setDescription('Here\'s a beautifully simple recipe that\'s full ' +
+                                'of flavor! All you need is some ginger and…')
+                            .setImage('http://example.com/recipe', 'Recipe')
+                        )
+                );
+            } else if (parameters.cardType == '4') {
+                app.askWithCarousel('Alright! Here are a few things you can learn. Which sounds interesting?',
+                    // Build a carousel
+                    app.buildCarousel()
+                    // Add the first item to the carousel
+                        .addItems(app.buildOptionItem('MATH_AND_PRIME',
+                            ['math', 'math and prime', 'prime numbers', 'prime'])
+                            .setTitle('Math & prime numbers')
+                            .setDescription('42 is an abundant number because the sum of its ' +
+                                'proper divisors 54 is greater…')
+                            .setImage('http://example.com/math_and_prime.jpg', 'Math & prime numbers'))
+                        // Add the second item to the carousel
+                        .addItems(app.buildOptionItem('EGYPT',
+                            ['religion', 'egpyt', 'ancient egyptian'])
+                            .setTitle('Ancient Egyptian religion')
+                            .setDescription('42 gods who ruled on the fate of the dead in the ' +
+                                'afterworld. Throughout the under…')
+                            .setImage('http://example.com/egypt', 'Egypt')
+                        )
+                        // Add third item to the carousel
+                        .addItems(app.buildOptionItem('RECIPES',
+                            ['recipes', 'recipe', '42 recipes'])
+                            .setTitle('42 recipes with 42 ingredients')
+                            .setDescription('Here\'s a beautifully simple recipe that\'s full ' +
+                                'of flavor! All you need is some ginger and…')
+                            .setImage('http://example.com/recipe', 'Recipe')
+                        )
+                );
+            } else if (parameters.cardType == '5') {
+                app.ask(app.buildRichResponse()
+                    .addSimpleResponse({speech: 'Howdy! I can tell you fun facts about ' +
+                    'almost any number like 0, 42, or 100. What number do you have ' +
+                    'in mind?',
+                        displayText: 'Howdy! I can tell you fun facts about almost any ' +
+                        'number. What number do you have in mind?'})
+                    .addSuggestions(['0', '42', '100', 'Never mind'])
+                    .addSuggestionLink('Suggestion Link', 'https://assistant.google.com/')
+                );
+            } else {
+                app.ask(googleResponse);
+            }
     }
   }
 
