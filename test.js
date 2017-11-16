@@ -8,6 +8,7 @@ const DialogflowApp = require('actions-on-google').DialogflowApp;
 
 /* Constant to identify Google Assistant requests */
 const googleAssistantRequest = 'google';
+const slackRequest = 'slack';
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
   console.log('Request headers: ' + JSON.stringify(request.headers));
@@ -30,12 +31,14 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   const actionHandlers = {
     /* Default handler for unknown or undefined actions */
     'default': () => {
-      // Use the Actions on Google lib to respond to Google requests; for other requests use JSON
-      if (requestSource === googleAssistantRequest) {
-        sendGoogleResponse(parameters);
-      } else {
-        sendDfResponse(parameters);
-      }
+        // Use the Actions on Google lib to respond to Google requests; for other requests use JSON
+        if (requestSource === googleAssistantRequest) {
+          sendGoogleResponse(parameters);
+        } else if (requestSource === slackRequest) {
+            sendSlackResponse(parameters);
+        } else {
+          sendDfResponse(parameters);
+        }
     }
   };
 
@@ -68,18 +71,31 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     }
   }
 
-  /* Function to send correctly formatted responses to Dialogflow which are then sent to the user */
-  function sendDfResponse (parameters) {
-    /* If the response to the user includes rich responses or contexts send them to Dialogflow */
-    let responseJson = {};
+    /* Function to send correctly formatted responses to Dialogflow which are then sent to the user */
+    function sendDfResponse (parameters) {
+        /* If the response to the user includes rich responses or contexts send them to Dialogflow */
+        let responseJson = {};
 
-    /* If speech or displayText is defined, use it to respond (if one isn't defined use the other's value) */
-    responseJson.speech = "df speech";
-    responseJson.displayText = "df text";
+        /* If speech or displayText is defined, use it to respond (if one isn't defined use the other's value) */
+        responseJson.speech = "df speech";
+        responseJson.displayText = "df text";
 
-    /* Send response to Dialogflow */
-    response.json(responseJson);
-  }
+        /* Send response to Dialogflow */
+        response.json(responseJson);
+    }
+
+    function sendSlackResponse (parameters) {
+        /* If the response to the user includes rich responses or contexts send them to Dialogflow */
+        let responseJson = {};
+
+        /* If speech or displayText is defined, use it to respond (if one isn't defined use the other's value) */
+        responseJson.imageUrl = "http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg";
+        responseJson.platform = "slack";
+        responseJson.type = "3";
+
+        /* Send response to Dialogflow */
+        response.json(responseJson);
+    }
 });
 
 /* Construct rich response for Google Assistant */
