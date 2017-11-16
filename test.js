@@ -51,7 +51,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   function sendGoogleResponse (parameters) {
     console.log("parameters = " + JSON.stringify(parameters));
 
-    if (parameters.cardType == '1') { /* Basic Card */
+      if (parameters.cardType == '1') { /* Basic Card */
         app.ask(googleBasicCard(parameters));
     } else if (parameters.cardType == '2') { /* List */
         app.askWithList('Alright! Here are a few things you can learn. Which sounds interesting?',
@@ -93,15 +93,7 @@ function googleResponse(parameters) {
 }
 
 function googleBasicCard(parameters) {
-    // return app.buildRichResponse()
-    //     .addSimpleResponse('이런 노래 어떨까요?')
-    //     .addBasicCard(app.buildBasicCard('카드의 내용이 나오는 자리.')
-    //         .setTitle('제목위치')
-    //         .addButton('Read more', 'www.melon.com')
-    //         .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', '이미지가 제대로 뜨지 않습니다.')
-    //     );
     return app.buildRichResponse()
-    // Create a basic card and add it to the rich response
         .addSimpleResponse('Math and prime numbers it is!')
         .addBasicCard(app.buildBasicCard('42 is an even composite number. It' +
             'is composed of three distinct prime numbers multiplied together. It' +
