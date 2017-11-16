@@ -88,6 +88,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         /* If the response to the user includes rich responses or contexts send them to Dialogflow */
         let responseJson = {};
 
+        console.log("slack response");
         /* If speech or displayText is defined, use it to respond (if one isn't defined use the other's value) */
         responseJson.imageUrl = "http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg";
         responseJson.platform = "slack";
