@@ -90,9 +90,9 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
         console.log("slack response");
         /* If speech or displayText is defined, use it to respond (if one isn't defined use the other's value) */
-        responseJson.imageUrl = "http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg";
+        responseJson.speech = "슬랙용 응답입니다.";
         responseJson.platform = "slack";
-        responseJson.type = "3";
+        responseJson.type = "0";
 
         /* Send response to Dialogflow */
         response.json(responseJson);
