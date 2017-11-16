@@ -1,48 +1,33 @@
 'use strict';
 
-const functions = require('firebase-functions'); // Cloud Functions for Firebase library
-const DialogflowApp = require('actions-on-google').DialogflowApp; // Google Assistant helper library
+/* Cloud Functions for Firebase library */
+const functions = require('firebase-functions');
+/* Google Assistant helper library */
+const DialogflowApp = require('actions-on-google').DialogflowApp;
 
-const googleAssistantRequest = 'google'; // Constant to identify Google Assistant requests
+/* Constant to identify Google Assistant requests */
+const googleAssistantRequest = 'google';
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
   console.log('Request headers: ' + JSON.stringify(request.headers));
   console.log('Request body: ' + JSON.stringify(request.body));
 
-  // An action is a string used to identify what needs to be done in fulfillment
-  let action = request.body.result.action; // https://dialogflow.com/docs/actions-and-parameters
+  /* An action is a string used to identify what needs to be done in fulfillment */
+  let action = request.body.result.action;
 
-  // Parameters are any entites that Dialogflow has extracted from the request.
-  const parameters = request.body.result.parameters; // https://dialogflow.com/docs/actions-and-parameters
+  /* Parameters are any entites that Dialogflow has extracted from the request. */
+  const parameters = request.body.result.parameters;
 
-  // Contexts are objects used to track and store conversation state
-  const inputContexts = request.body.result.contexts; // https://dialogflow.com/docs/contexts
+  /* Contexts are objects used to track and store conversation state */
+  const inputContexts = request.body.result.contexts;
 
-  // Get the request source (Google Assistant, Slack, API, etc) and initialize DialogflowApp
+  /* Get the request source (Google Assistant, Slack, API, etc) and initialize DialogflowApp */
   const requestSource = (request.body.originalRequest) ? request.body.originalRequest.source : undefined;
   const app = new DialogflowApp({request: request, response: response});
 
-  // Create handlers for Dialogflow actions as well as a 'default' handler
+  /* Create handlers for Dialogflow actions as well as a 'default' handler */
   const actionHandlers = {
-    // The default welcome intent has been matched, welcome the user (https://dialogflow.com/docs/events#default_welcome_intent)
-    'input.welcome': () => {
-      // Use the Actions on Google lib to respond to Google requests; for other requests use JSON
-      if (requestSource === googleAssistantRequest) {
-        sendGoogleResponse('Hello, Welcome to my Dialogflow agent!'); // Send simple response to user
-      } else {
-        sendResponse('Hello, Welcome to my Dialogflow agent!'); // Send simple response to user
-      }
-    },
-    // The default fallback intent has been matched, try to recover (https://dialogflow.com/docs/intents#fallback_intents)
-    'input.unknown': () => {
-      // Use the Actions on Google lib to respond to Google requests; for other requests use JSON
-      if (requestSource === googleAssistantRequest) {
-        sendGoogleResponse('I\'m having trouble, can you try that again?'); // Send simple response to user
-      } else {
-        sendResponse('I\'m having trouble, can you try that again?'); // Send simple response to user
-      }
-    },
-    // Default handler for unknown or undefined actions
+    /* Default handler for unknown or undefined actions */
     'default': () => {
       // Use the Actions on Google lib to respond to Google requests; for other requests use JSON
       if (requestSource === googleAssistantRequest) {
@@ -55,10 +40,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         sendGoogleResponse(responseToUser);
       } else {
         let responseToUser = {
-          //richResponses: richResponses, // Optional, uncomment to enable
-          //outputContexts: [{'name': 'weather', 'lifespan': 2, 'parameters': {'city': 'Rome'}}], // Optional, uncomment to enable
-          speech: 'yaho editor', // spoken response
-          displayText: 'yaho dp editor' // displayed response
+          speech: 'Dialogflow default speech',
+          displayText: 'Dialogflow default text'
         };
         sendResponse(responseToUser);
       }
@@ -146,34 +129,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
                         )
                 );
             } else if (parameters.cardType == '3') {
-                app.askWithList('Alright! Here are a few things you can learn. Which sounds interesting?',
-                    // Build a list
-                    app.buildList('Things to learn about')
-                    // Add the first item to the list
-                        .addItems(app.buildOptionItem('MATH_AND_PRIME',
-                            ['math', 'math and prime', 'prime numbers', 'prime'])
-                            .setTitle('Math & prime numbers')
-                            .setDescription('42 is an abundant number because the sum of its ' +
-                                'proper divisors 54 is greater…')
-                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', 'Math & prime numbers'))
-                        // Add the second item to the list
-                        .addItems(app.buildOptionItem('EGYPT',
-                            ['religion', 'egpyt', 'ancient egyptian'])
-                            .setTitle('Ancient Egyptian religion')
-                            .setDescription('42 gods who ruled on the fate of the dead in the ' +
-                                'afterworld. Throughout the under…')
-                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg', 'Egypt')
-                        )
-                        // Add third item to the list
-                        .addItems(app.buildOptionItem('RECIPES',
-                            ['recipes', 'recipe', '42 recipes'])
-                            .setTitle('42 recipes with 42 ingredients')
-                            .setDescription('Here\'s a beautifully simple recipe that\'s full ' +
-                                'of flavor! All you need is some ginger and…')
-                            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/08/448/2208448_500.jpg', 'Recipe')
-                        )
-                );
-            } else if (parameters.cardType == '4') {
                 app.askWithCarousel('Alright! Here are a few things you can learn. Which sounds interesting?',
                     // Build a carousel
                     app.buildCarousel()
@@ -201,7 +156,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
                             .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/08/448/2208448_500.jpg', 'Recipe')
                         )
                 );
-            } else if (parameters.cardType == '5') {
+            } else if (parameters.cardType == '4') {
                 app.ask(app.buildRichResponse()
                     .addSimpleResponse({speech: 'Howdy! I can tell you fun facts about ' +
                     'almost any number like 0, 42, or 100. What number do you have ' +
