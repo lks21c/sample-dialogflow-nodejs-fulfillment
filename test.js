@@ -93,12 +93,24 @@ function googleResponse(parameters) {
 }
 
 function googleBasicCard(parameters) {
+    // return app.buildRichResponse()
+    //     .addSimpleResponse('이런 노래 어떨까요?')
+    //     .addBasicCard(app.buildBasicCard('카드의 내용이 나오는 자리.')
+    //         .setTitle('제목위치')
+    //         .addButton('Read more', 'www.melon.com')
+    //         .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', '이미지가 제대로 뜨지 않습니다.')
+    //     );
     return app.buildRichResponse()
-        .addSimpleResponse('이런 노래 어떨까요?')
-        .addBasicCard(app.buildBasicCard('카드의 내용이 나오는 자리.')
-            .setTitle('제목위치')
-            .addButton('Read more', 'www.melon.com')
-            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', '이미지가 제대로 뜨지 않습니다.')
+    // Create a basic card and add it to the rich response
+        .addSimpleResponse('Math and prime numbers it is!')
+        .addBasicCard(app.buildBasicCard('42 is an even composite number. It' +
+            'is composed of three distinct prime numbers multiplied together. It' +
+            'has a total of eight divisors. 42 is an abundant number, because the' +
+            'sum of its proper divisors 54 is greater than itself. To count from' +
+            '1 to 42 would take you about twenty-one…')
+            .setTitle('Math & prime numbers')
+            .addButton('Play Test', 'http://www.melon.com')
+            .setImage('http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg', 'Image alternate text')
         );
 }
 
